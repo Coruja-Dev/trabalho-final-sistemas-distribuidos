@@ -9,3 +9,5 @@
 .pnp.*
 
 node_modules
+
+.env
