@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY dispatcher/package.json ./dispatcher/
+COPY worker/package.json ./worker/
+COPY shared/package.json ./shared/
+RUN yarn install
+COPY . .
+WORKDIR /app/worker
+CMD ["yarn", "dev"]
