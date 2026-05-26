@@ -75,7 +75,7 @@ const dispatchPending = async () => {
   }
 }
 
-const HEARTBEAT_TIMEOUT = 5000
+const HEARTBEAT_TIMEOUT = parseInt(process.env.HEARTBEAT_TIMEOUT ?? '5000')
 
 setInterval(() => {
   const now = Date.now()
@@ -188,5 +188,5 @@ app.get('/state', (_req, res) => res.json(globalState))
 app.get('/jobs', (_req, res) => res.json([...jobs.values()]))
 app.get('/workers', (_req, res) => res.json([...workers.values()]))
 
-const PORT = process.env.PORT ?? 3000
+const PORT = process.env.DISPATCHER_PORT ?? 3000
 app.listen(PORT, () => console.log(`Dispatcher running on port ${PORT}`))

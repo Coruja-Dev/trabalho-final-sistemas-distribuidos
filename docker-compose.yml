@@ -6,7 +6,10 @@ services:
       context: .
       dockerfile: dispatcher/Dockerfile
     ports:
-      - "3000:3000"
+      - "${DISPATCHER_PORT}:${DISPATCHER_PORT}"
+    environment:
+      - PORT=${DISPATCHER_PORT}
+      - HEARTBEAT_TIMEOUT=${HEARTBEAT_TIMEOUT}
     networks:
       - task-network
 
