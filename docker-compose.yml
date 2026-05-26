@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  dispatcher:
+    build:
+      context: .
+      dockerfile: dispatcher/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - task-network
+
+  worker-1:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    environment:
+      - DISPATCHER_URL=http://dispatcher:3000
+      - WORKER_ID=worker-1
+      - PORT=4000
+    depends_on:
+      - dispatcher
+    restart: always
+    networks:
+      - task-network
+
+  worker-2:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    environment:
+      - DISPATCHER_URL=http://dispatcher:3000
+      - WORKER_ID=worker-2
+      - PORT=4000
+    depends_on:
+      - dispatcher
+    restart: always
+    networks:
+      - task-network
+
+  worker-3:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    environment:
+      - DISPATCHER_URL=http://dispatcher:3000
+      - WORKER_ID=worker-3
+      - PORT=4000
+    depends_on:
+      - dispatcher
+    restart: always
+    networks:
+      - task-network
+
+networks:
+  task-network:
+    driver: bridge
